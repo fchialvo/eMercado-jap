@@ -23,8 +23,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     const list = document.querySelector('#product-list-container');
 
     const productList = await getJSONData(URL);
-
-    console.log(productList.data.products)
     
     for(let product of productList.data.products){
         list.innerHTML += getHTML(product)
