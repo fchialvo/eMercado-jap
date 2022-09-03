@@ -11,7 +11,7 @@
        location.href = ("home.html");
      }
      const usuario = document.querySelector("#floatingInput");
-     sessionStorage.setItem("usuario", usuario.value);
+     localStorage.setItem("usuario", usuario.value);
     }, false);
     })()
     
