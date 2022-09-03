@@ -14,9 +14,6 @@ let showSpinner = function(){
 let hideSpinner = function(){
   document.getElementById("spinner-wrapper").style.display = "none";
 }
-const display = document.getElementById("usuario");
-let usuario = localStorage.getItem("usuario");
-display.innerHTML = `<a class='nav-link' href='my-profile.html'>${usuario}</a>`
 let getJSONData = function(url){
     let result = {};
     showSpinner();
