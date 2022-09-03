@@ -11,7 +11,9 @@ document.addEventListener("DOMContentLoaded", function(){
         localStorage.setItem("catID", 103);
         window.location = "products.html"
     });
-
+    const display = document.getElementById("usuario");
+    let usuario = localStorage.getItem("usuario");
+    display.innerHTML = `<a class='nav-link' href='my-profile.html'>${usuario}</a>`
 
 });
 
