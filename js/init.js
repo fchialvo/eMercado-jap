@@ -7,10 +7,6 @@ const CART_INFO_URL = "https://japceibal.github.io/emercado-api/user_cart/";
 const CART_BUY_URL = "https://japceibal.github.io/emercado-api/cart/buy.json";
 const EXT_TYPE = ".json";
 
-const display = document.getElementById("usuario");
-let usuario = localStorage.getItem("usuario");
-display.innerHTML = `<a class='nav-link' href='my-profile.html'>${usuario}</a>`
-
 let showSpinner = function(){
   document.getElementById("spinner-wrapper").style.display = "block";
 }
@@ -42,3 +38,7 @@ let getJSONData = function(url){
         return result;
     });
 }
+
+const display = document.getElementById("usuario");
+let usuario = localStorage.getItem("usuario");
+display.innerHTML = `<a class='nav-link' href='my-profile.html'>${usuario}</a>`
