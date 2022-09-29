@@ -31,7 +31,8 @@ function getCommentsHTML(product) {
                 <div class="title h6">
                     <b>${product.user}</b>
                     - ${product.dateTime} -
-                    <div class = "puntuaciones" style = "display: inline"> 
+                    <div> 
+                      ${showStars(product.score)}
                     </div>
                 </div>
                 </div>
@@ -43,17 +44,52 @@ function getCommentsHTML(product) {
     `;
 }
 
+function getRelatedProductsHTML(product){
+  return `
+  <div class = "row">
+  <div class="card mx-2 cursor-active" style="width: 18rem;" onclick="setProductID(${product.relatedProducts[0].id})">
+          <img src="${product.relatedProducts[0].image}" class="card-img-top" alt="${product.relatedProducts[0].name}">
+          <div class="card-body">
+            <h5 class="card-title">${product.relatedProducts[0].name}</h5>
+          </div>
+  </div>
+  <div class="card cursor-active" style="width: 18rem" onclick="setProductID(${product.relatedProducts[1].id})">
+          <img src="${product.relatedProducts[1].image}" class="card-img-top" alt="${product.relatedProducts[1].name}">
+          <div class="card-body">
+            <h5 class="card-title">${product.relatedProducts[1].name}</h5>
+          </div>
+  </div>
+  </div>
+  `
+}
+
+function showStars (puntaje) {
+  const star = '<span class="fa fa-star"></span>';
+  const starChecked = '<span class="fa fa-star checked"></span>';
+  let completos = Math.floor(puntaje);
+  let estrellas ='';
+  for (let i = 0; i < completos; i++) {
+  estrellas += starChecked      
+  }
+
+  if (completos < 10) {
+      for (let i = completos; i < 5; i++) {
+         estrellas += star   
+ } 
+  return estrellas
+}
+}
 document.addEventListener("DOMContentLoaded", async function () {
   //Genero el html con la info del producto seleccionado, obtenida del URL que varía según el producto.
   const list = document.querySelector("#product-container");
   const producto = localStorage.getItem("productID");
   const URL = PRODUCT_INFO_URL + producto + EXT_TYPE;
+  console.log(producto)
   const productInfo = await getJSONData(URL);
   list.innerHTML += getHTML(productInfo.data);
 
+
   //Sección de comentarios
-  const star = '<span class="fa fa-star"></span>';
-  const starChecked = '<span class="fa fa-star checked"></span>';
   const comments = document.querySelector("#comments");
   const URL_COMMENTS = PRODUCT_INFO_COMMENTS_URL + producto + EXT_TYPE;
   const productInfo_comments = await getJSONData(URL_COMMENTS);
@@ -61,24 +97,37 @@ document.addEventListener("DOMContentLoaded", async function () {
     comments.innerHTML += getCommentsHTML(comment); //Imprimir comentarios
   }
 
-  let puntuaciones = document.getElementsByClassName("puntuaciones"); //Donde van a ir las puntuaciones de los comentarios
-  let index = 0;
-  for (let puntuacion of puntuaciones) {
-    index++;
-    let score = productInfo_comments.data[index - 1].score; //Obtengo la puntuación del comentario
-    puntuacion.innerHTML = starChecked.repeat(score); //Repito la estrella completa según la puntuación
-  }
-
-  index = 0;
-  for (let puntuacion of puntuaciones) {
-    //Vuelvo a recorrer las puntuaciones, esta vez para colocar las estrellas sin rellenar
-    index++;
-    let score = productInfo_comments.data[index - 1].score;
-    if (score < 5) {
-      for (let i = score; i < 5; i++) {
-        //Recorro los puntos que restan para llegar a 5
-        puntuacion.innerHTML += star; //Agrego las estrellas correspondientes
-      }
-    }
-  }
+  //Productos relacionados
+  const relacionados = document.querySelector("#relatedProducts");
+  relacionados.innerHTML += getRelatedProductsHTML(productInfo.data);
 });
+
+const btnEnviar = document.getElementById("enviar")
+const userComment = document.getElementById("userComment");
+const select = document.getElementById("userScore")
+btnEnviar.addEventListener("click", ()=>{
+  let selectedOption = select.options[select.selectedIndex].value;
+  let hoy = new Date();
+  // obtener la fecha
+  let fecha = hoy.toISOString().slice(0,10);
+  //obtener la hora
+  let hora = hoy.toLocaleTimeString();
+  const comments = document.querySelector("#comments");
+  comments.innerHTML += `<div class="card card-white post ps-2 pt-2">  
+                          <div class="post-heading">
+                              <div class="float-left meta">
+                                  <div class="title h6">
+                                      <b>${localStorage.getItem("usuario")}</b>
+                                      - ${fecha} - ${hora}
+                                      <div > 
+                                        ${showStars(selectedOption)}
+                                      </div>
+                                  </div>
+                                  </div>
+                              </div>
+                              <div class="post-description">
+                                  <p>${userComment.value}</p>
+                              </div>
+                        </div>  `
+})
+

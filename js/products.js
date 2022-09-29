@@ -47,10 +47,6 @@ function sortProducts(criteria, array){
     return result;
 }
 
-function setProductID(id) {
-    localStorage.setItem("productID", id);
-    window.location = "product-info.html"
-}
 
 function showProductsList(){
     let htmlContentToAppend = "";
