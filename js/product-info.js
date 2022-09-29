@@ -113,21 +113,21 @@ btnEnviar.addEventListener("click", ()=>{
   //obtener la hora
   let hora = hoy.toLocaleTimeString();
   const comments = document.querySelector("#comments");
-  comments.innerHTML += `<div class="card card-white post ps-2 pt-2">  
-                          <div class="post-heading">
-                              <div class="float-left meta">
-                                  <div class="title h6">
-                                      <b>${localStorage.getItem("usuario")}</b>
-                                      - ${fecha} - ${hora}
-                                      <div > 
-                                        ${showStars(selectedOption)}
-                                      </div>
-                                  </div>
-                                  </div>
-                              </div>
-                              <div class="post-description">
-                                  <p>${userComment.value}</p>
-                              </div>
-                        </div>  `
+  comments.innerHTML += 
+  `<div class="card card-white post ps-2 pt-2">  
+      <div class="post-heading">
+          <div class="float-left meta">
+              <div class="title h6">
+                  <b>${localStorage.getItem("usuario")}</b>- ${fecha} - ${hora}
+                <div> 
+                  ${showStars(selectedOption)}
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="post-description">
+          <p>${userComment.value}</p>
+        </div>
+    </div> `
 })
 

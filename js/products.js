@@ -58,7 +58,7 @@ function showProductsList(){
             ((maxCount == undefined) || (maxCount != undefined && parseInt(product.cost) <= maxCount))){
 
             htmlContentToAppend += `
-            <div onclick="setProductID(${product.id})" class="list-group-item list-group-item-action cursor-active">
+            <div onclick="setProductID(${product.id})" class="producto list-group-item list-group-item-action cursor-active">
                     <div class="row">
                         <div class="col-3">
                             <img src="${product.image}" alt="${product.name}" class="img-thumbnail">
@@ -154,4 +154,21 @@ document.addEventListener("DOMContentLoaded", function(e){
 
 });
 
+//Buscador
+document.addEventListener("keyup", e=>{
 
+    if (e.target.matches("#buscador")){
+  
+        if (e.key ==="Escape")e.target.value = ""
+  
+        document.querySelectorAll(".producto").forEach(producto =>{
+  
+            producto.textContent.toLowerCase().includes(e.target.value.toLowerCase())
+              ?producto.classList.remove("filtro")
+              :producto.classList.add("filtro")
+        })
+  
+    }
+  
+  
+  })

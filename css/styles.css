@@ -189,3 +189,15 @@ a.custom-card:hover {
   color: orange;
 }
 
+#buscador{
+  width: 30vw;
+  padding: 10px;
+  outline: none;
+  border: 2px solid #CCD1E4;
+  font-weight: 600;
+}
+
+.filtro{
+  display: none;
+}
+
