@@ -3,7 +3,7 @@ const URL = "";
 function getHTML(product) {
   return `
     <div class="row">
-    <div class = "border col-6">
+    <div class = "border col-8">
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
           <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -35,11 +35,11 @@ function getHTML(product) {
           </button>
         </div>
       </div>
-      <div class = "col-6">
+      <div class = "col-4">
       <h2 class = "fs-2 fw-semibold">${product.name}</h2>
       <hr>
-      <h3>${product.currency} ${product.cost}</h3>
-      <p class = "fs-5">${product.description}</p>
+      <h4 class = "fw-bold">${product.currency} ${product.cost}</h4>
+      <p class = "fs-6">${product.description}</p>
       <b>Categoría</b>
       <p class = "fs-6">${product.category}</p>
       <p class = "fs-6"><b>${product.soldCount} </b>vendidos</p>
