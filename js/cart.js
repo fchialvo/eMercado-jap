@@ -29,12 +29,12 @@ document.addEventListener('DOMContentLoaded', async function() {
     const cart = document.querySelector('#carrito');
     const cartList = await getJSONData(URL + 25801 + EXT_TYPE);
     
+
     for(let cartItem of cartList.data.articles){     
         cart.innerHTML += getHTML(cartItem) 
         const cantidadInput = document.getElementById("cantidad");
         cantidadInput.addEventListener("change", (e) =>{
             cantidad = e.target.value;
-            console.log(cantidad)
             let subtotal = cantidad * cartItem.unitCost;
             let subtotalInput = document.getElementById("subtotal");
             subtotalInput.innerHTML =cartItem.currency + " " + subtotal;
