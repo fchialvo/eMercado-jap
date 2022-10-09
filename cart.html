@@ -37,8 +37,33 @@
   </nav>
   <main>
     <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+      <div class="row">
+        <div class="col-6 cont-envio">
+          <h4>Tipo de envío</h4>
+          <label class = "custom-radio-checkbox">
+            <input name = "input" type = "radio" class = "custom-radio-checkbox__input">
+            <span class="custom-radio-checkbox__show custom-radio-checkbox__show--radio"></span>
+            <span class="custom-radio-checkbox__text">Premium 2 a 5 días(15%)</span>
+          </label><br>
+          
+          <label class = "custom-radio-checkbox">
+            <input name = "input" type = "radio" class = "custom-radio-checkbox__input">
+            <span class="custom-radio-checkbox__show custom-radio-checkbox__show--radio"></span>
+            <span class="custom-radio-checkbox__text">Express 5 a 8 días(7%)</span>
+          </label><br>
+
+          <label class = "custom-radio-checkbox">
+            <input name = "input" type = "radio" class = "custom-radio-checkbox__input">
+            <span class="custom-radio-checkbox__show custom-radio-checkbox__show--radio"></span>
+            <span class="custom-radio-checkbox__text"> Standard de 12 a 15 días (5%)</span>
+          </label>
+          <h4>Dirección de envío</h4>  
+          <label for = "calle" class = "txtLabel">Calle:</label><input type = "text" id = "calle"><br>
+          <label for = "numero" class = "txtLabel">Numero:</label><input type = "text" id = "numero"><br>
+          <label for = "esquina" class = "txtLabel">Esquina:</label><input type = "text" id = "esquina">
+        </div>
+        <div class="col-6" id = "carrito">       
+        </div>
       </div>
     </div>
   </main>
