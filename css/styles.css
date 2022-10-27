@@ -201,58 +201,51 @@ a.custom-card:hover {
   display: none;
 }
  
-.custom-radio-checkbox {
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
+.enviolbl{
+  display: block;
+  margin-bottom: 8px;
 }
 
-/* Modificador para dar la imagen de radio */
-.custom-radio-checkbox__show--radio {
-  background-image: url(../img/radio_unchecked.svg);
+.envioRadio{
+  margin-right: 5px;
 }
 
-/* Oculta input original */
-.custom-radio-checkbox > .custom-radio-checkbox__input {
-  display: none;
-}
-
-/* Radio personalizado usando <span> */
-.custom-radio-checkbox > .custom-radio-checkbox__show {
-  display: inline-block;
-  width: 25px;
-  height: 25px;
-  margin-right: .5rem;
-  background-size: cover;
-}
-
-/* Cambia el radio personalizado cuando es pulsado */
-.custom-radio-checkbox > .custom-radio-checkbox__input:checked + .custom-radio-checkbox__show--radio {
-  background-image: url(../img/radio_checked.svg);
-}
 
 .txtLabel{
   display: inline-block;
   width: 70px;
 }
 
-h4{
-  margin-top: 10px;
-}
 input[type = "text"]{
-  margin-bottom: 20px;
   margin-left: 10px;
   border-radius: 5px;
-   border: 1px solid #39c;
+  border: 1px solid #39c;  
+  display: inline-block !important;
+  width: 300px !important;
 }
 
+.invalid-feedback{
+  margin-top: -5px;
+}
+.form-label{
+  margin-bottom: 20px;
+}
 .cont{
-  margin-top: 14.5px;border: 3px solid rgb(233, 236, 236); height: 500px; padding-left: 5px
+  background-color: #9ed0d6;
+  border-radius: 10px;
+  color:rgb(41, 41, 41);
+  margin-top: 14.5px;
+  height: 440px;
+  padding: 5px 5px 0 10px;
 }
 
-.cont-envio{
-  width:350px; margin-left: 80px;
-  padding-left: 45px;
-  border: 3px solid rgb(233, 236, 236);
-  margin-top: 14.5px;
+label{
+  font-size: 18px;
+}
+
+.envio{
+  height: 440px;
+  margin-right: 0.1px;
+  padding-left: 30px;
+  padding-right: 30px;
 }

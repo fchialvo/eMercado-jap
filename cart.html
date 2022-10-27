@@ -29,43 +29,137 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-          <li class="nav-item" id = "usuario">
+          <li class="nav-item" id="usuario">
           </li>
         </ul>
       </div>
     </div>
   </nav>
   <main>
-    <div class="container">
-      <div class="row">
-        <div class="col-6 cont-envio">
-          <h4>Tipo de envío</h4>
-          <label class = "custom-radio-checkbox">
-            <input name = "input" type = "radio" class = "custom-radio-checkbox__input">
-            <span class="custom-radio-checkbox__show custom-radio-checkbox__show--radio"></span>
-            <span class="custom-radio-checkbox__text">Premium 2 a 5 días(15%)</span>
-          </label><br>
-          
-          <label class = "custom-radio-checkbox">
-            <input name = "input" type = "radio" class = "custom-radio-checkbox__input">
-            <span class="custom-radio-checkbox__show custom-radio-checkbox__show--radio"></span>
-            <span class="custom-radio-checkbox__text">Express 5 a 8 días(7%)</span>
-          </label><br>
+    <form action = "#"class="needs-validation" novalidate>
+      <div class="container">
+        <div class="row">
+          <div class="col-6 cont envio">
+            <h4>Tipo de envío</h4>
+            <div class="radiosEnvio">
+              <label for="premium" class="enviolbl"><input name="radio" id="premium" type="radio" value="0.15"
+                  class="envioRadio">Premium 2 a 5 días (15%)</label>
+              <label for="express" class="enviolbl"><input name="radio" id="express" type="radio" value="0.07"
+                  class="envioRadio">Express 5 a 8 días (7%)</label>
+              <label for="standard" class="enviolbl"><input name="radio" id="standard" type="radio" value="0.05"
+                  class="envioRadio" required>Standard 12 a 15 días (5%)
+                <div class="invalid-feedback">
+                  Por favor seleccione un tipo de envio.
+                </div>
+              </label>
+            </div>
+            <h4>Dirección de envío</h4>
+            <label for="calle" class="txtLabel form-label">Calle:</label><input type="text" id="calle" required
+              class="form-control"><br>
+            <div class="invalid-feedback">
+              Por favor seleccione una calle.
+            </div>
+            <label for="numero" class="txtLabel form-label">Numero:</label><input type="text" id="numero" required
+              class="form-control"><br>
+            <div class="invalid-feedback">
+              Por favor seleccione un numero.
+            </div>
+            <label for="esquina" class="txtLabel form-label">Esquina:</label><input type="text" id="esquina" required
+              class="form-control">
+            <div class="invalid-feedback">
+              Por favor seleccione una esquina.
+            </div>
+          </div>
+          <div class="col">
+            <div class="cont cartItem" id="carrito">
+              <h4>Mi carrito</h4>      
+            </div>
+            
+          </div>
+          <div class="col d-flex flex-column align-items-center" id="costos">
+            <div class="cont envio">
+              <h3>Costos</h3>
+              <div class="card card-white post px-2 pt-2 mb-2 " style="color:rgb(47, 47, 49); width: 500px">
+                <h4 class="card-title">Subtotal</h4>
+                <p class="card-text">USD <span id="subtotalCosto">15200</span></p>
+              </div>
+              <div class="card card-white post ps-2 pt-2  mb-2" style="color:rgb(47, 47, 49); width: 500px">
+                <h4 class="card-title">Costo del envío</h4>
+                <p class="card-text">USD <span id="costoEnvio">-</span></p>
+              </div>
+              <div class="card card-white post ps-2 pt-2  mb-5" style="color:rgb(47, 47, 49); width: 500px">
+                <h4 class="card-title">Total</h4>
+                <p class="card-text">USD <span id="total">15200</span></p>
+              </div>
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-primary" style="width: 500px; height: 50px" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
+                Seleccionar forma de pago
+              </button>
+              <div id="mensajeError"></div>
 
-          <label class = "custom-radio-checkbox">
-            <input name = "input" type = "radio" class = "custom-radio-checkbox__input">
-            <span class="custom-radio-checkbox__show custom-radio-checkbox__show--radio"></span>
-            <span class="custom-radio-checkbox__text"> Standard de 12 a 15 días (5%)</span>
-          </label>
-          <h4>Dirección de envío</h4>  
-          <label for = "calle" class = "txtLabel">Calle:</label><input type = "text" id = "calle"><br>
-          <label for = "numero" class = "txtLabel">Numero:</label><input type = "text" id = "numero"><br>
-          <label for = "esquina" class = "txtLabel">Esquina:</label><input type = "text" id = "esquina">
-        </div>
-        <div class="col-6" id = "carrito">       
-        </div>
-      </div>
-    </div>
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Forma de pago</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <label for="tCredito"><input type="radio" name="tCredito" id="tCredito" class="form-check-input"
+                          oninput="disableTBancaria()";
+                    nTarjeta.disabled = false;
+                    cSeguridad.disabled = false;
+                    vencimiento.disabled = false;"> Tarjeta de Crédito</label>
+                      <hr>
+                      <label for="nTarjeta">Número de tarjeta <input type="text" id="nTarjeta" class="form-control"
+                          required>
+                        <div class="invalid-feedback">
+                          Por favor ingrese un número de tarjeta.
+                        </div>
+                      </label>
+
+                      <label for="cSeguridad">Código de Seguridad <input type="text" id="cSeguridad"
+                          class="form-control" required>
+                        <div class="invalid-feedback">
+                          Por favor ingrese un código de seguridad.
+                        </div>
+                      </label>
+
+                      <label for="vencimiento">Vencimiento <input type="date" id="vencimiento" class="form-control"
+                          required>
+                        <div class="invalid-feedback">
+                          Por favor ingrese una fecha de vencimiento.
+                        </div>
+                      </label>
+
+                      <hr>
+                      <label for="tBancaria"><input type="radio" required name="tCredito" id="tBancaria"
+                          class="form-check-input" oninput="disableTarjeta()"> Transferencia Bancaria
+                      </label>
+
+                      <hr>
+                      <label for="nCuenta">Número de cuenta <input type="text" id="nCuenta" class="form-control"
+                          required>
+                        <div class="invalid-feedback">
+                          Por favor ingrese un numero de cuenta.
+                        </div>
+                      </label>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-4">
+              Finalizar compra
+            </button>
+          </div>
+    </form>
   </main>
   <footer class="text-muted">
     <div class="container">
@@ -86,6 +180,7 @@
     </div>
   </div>
   <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="js/init.js"></script>
   <script src="js/cart.js"></script>
 </body>
