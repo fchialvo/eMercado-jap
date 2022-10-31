@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
     //genera HTML del carrito, teniendo como argumento el item que nos da el URL.
     cart.innerHTML += getHTML(cartItem);
+
     const cantidadInput = document.getElementById("cantidad");
     const subtotalInput = document.getElementById("subtotalInput");
     const subtotalCosto = document.getElementById("subtotalCosto");
@@ -127,7 +128,6 @@ const tBancaria = document.getElementById("tBancaria");
   Array.from(forms).forEach((form) => {
     form.addEventListener(
       "submit",(event) => {
-        const cantidadInput = document.getElementById("cantidad");
         event.preventDefault();
         //si no están checkeados los campos de forma de pago, mostrar error
         if((!tCredito.checked && !tBancaria.checked)){

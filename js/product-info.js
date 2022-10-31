@@ -63,22 +63,14 @@ function getCommentsHTML(product) {
   `;
 }
 
-function getRelatedProductsHTML(product) {
+function getRelatedProductsHTML(relatedProduct) {
   return `
-  <div class = "row">
-    <div class="card mx-2 cursor-active" style="width: 18rem;" onclick="setProductID(${product.relatedProducts[0].id})">
-            <img src="${product.relatedProducts[0].image}" class="card-img-top" alt="${product.relatedProducts[0].name}">
+    <div class="card mx-2 cursor-active" style="width: 18rem;" onclick="setProductID(${relatedProduct.id})">
+            <img src="${relatedProduct.image}" class="card-img-top" alt="${relatedProduct.name}">
             <div class="card-body">
-              <h5 class="card-title">${product.relatedProducts[0].name}</h5>
+              <h5 class="card-title">${relatedProduct.name}</h5>
             </div>
     </div>
-    <div class="card cursor-active" style="width: 18rem" onclick="setProductID(${product.relatedProducts[1].id})">
-            <img src="${product.relatedProducts[1].image}" class="card-img-top" alt="${product.relatedProducts[1].name}">
-            <div class="card-body">
-              <h5 class="card-title">${product.relatedProducts[1].name}</h5>
-            </div>
-    </div>
-  </div>
   `;
 }
 
@@ -117,7 +109,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   //Productos relacionados
   const relacionados = document.querySelector("#relatedProducts");
-  relacionados.innerHTML += getRelatedProductsHTML(productInfo.data);
+  for(let product of productInfo.data.relatedProducts){
+    relacionados.innerHTML += getRelatedProductsHTML(product);
+  }
+  
 });
 
 const btnEnviar = document.getElementById("enviar");
