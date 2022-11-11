@@ -3,14 +3,14 @@ const URL = "https://japceibal.github.io/emercado-api/user_cart/";
 function getHTML(product) {
   return `
     <div class="d-flex p-2 mb-2 bg-light">
-        <img src="${product.image}" width = "125px" height="90px">
+        <img src="${product.image}" width = "130px" height="90px" alt="${product.name}">
         <div class="d-flex justify-content-between w-100" id="cartItem">
             <div class="d-flex flex-column gap-2 mx-2">
                 <h4 class = "m-0">${product.name}</h4>
                 <p >Costo: ${product.currency} ${product.unitCost}</p>
             </div>
             <div class="d-flex flex-column gap-2 mx-2">
-                <b>Cantidad</b>
+                <label for="cantidad"><b>Cantidad</b></label>
                 <input type="number" id = "cantidad" value = "${product.count}" min="1" style = "width :50px; height: 30px;">
             </div>
             <div class="d-flex flex-column gap-2 mx-2">
