@@ -1,3 +1,4 @@
+// se guarda en localStorage el id de la categoria seleccionada en el index, y se redirige a su pagina.
 document.addEventListener("DOMContentLoaded", function(){
     document.getElementById("autos").addEventListener("click", function() {
         localStorage.setItem("catID", 101);

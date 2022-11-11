@@ -39,18 +39,25 @@ let getJSONData = function(url){
     });
 }
 
+//espacio para mostrar nombre de usuario en el navbar
 const display = document.getElementById("usuario");
+
+//capturar el email que se ingresó en el login
 let usuario = localStorage.getItem("usuario");
-display.innerHTML = `<div class="dropdown">
-<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-  ${usuario}
-</button>
-<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-  <li><a class="dropdown-item" href="cart.html">Mi Carrito</a></li>
-  <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
-  <li><a class="dropdown-item" href="index.html" onclick = "borrarUsuario()">Cerrar sesión</a></li>
-</ul>
-</div>`
+
+//generar el dropdown con el nombre de usuario de manera dinamica
+display.innerHTML = `
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    ${usuario}
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li><a class="dropdown-item" href="cart.html">Mi Carrito</a></li>
+    <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+    <li><a class="dropdown-item" href="index.html" onclick = "borrarUsuario()">Cerrar sesión</a></li>
+  </ul>
+</div>
+`
 
 function borrarUsuario(){
   localStorage.removeItem("usuario");

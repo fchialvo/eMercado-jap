@@ -1,4 +1,4 @@
-
+// Validacion de los datos ingresados
 (function () {
     const form = document.querySelector('.needs-validation');
 

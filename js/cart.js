@@ -4,16 +4,16 @@ function getHTML(product) {
   return `
     <div class="d-flex p-2 mb-2 bg-light">
         <img src="${product.image}" width = "125px" height="90px">
-        <div class="d-flex justify-content-between w-100">
+        <div class="d-flex justify-content-between w-100" id="cartItem">
             <div class="d-flex flex-column gap-2 mx-2">
                 <h4 class = "m-0">${product.name}</h4>
                 <p >Costo: ${product.currency} ${product.unitCost}</p>
             </div>
-            <div class="d-flex flex-column gap-2">
+            <div class="d-flex flex-column gap-2 mx-2">
                 <b>Cantidad</b>
                 <input type="number" id = "cantidad" value = "${product.count}" min="1" style = "width :50px; height: 30px;">
             </div>
-            <div class="d-flex flex-column gap-2">
+            <div class="d-flex flex-column gap-2 mx-2">
                 <b>Subtotal </b>
                 <p>USD <span id = "subtotalInput">${product.unitCost}</span></p>
             </div>

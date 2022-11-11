@@ -26,7 +26,7 @@
   </style>
 </head>
 
-<body>
+<body style="background-color: rgb(192, 216, 218);">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
     <div class="container">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -44,17 +44,63 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-          <li class="nav-item" id = "usuario">
+          <li class="nav-item" id="usuario">
+            
           </li>
         </ul>
       </div>
     </div>
   </nav>
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+    <div class="container rounded bg-white mt-5">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="d-flex flex-column align-items-center text-center" id="usuarioEmail">
+            <img class="rounded-circle mt-5" id="pic" src="img/avatar.svg">
+            <div>
+              <label for="profile-pic" id="profile-pic-lbl">Editar Imagen</label>
+              <input type="file" id="profile-pic" onchange="previewFile(this)" name="profile-pic"accept="image/*"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="p-1 py-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h3 class="text-right">Mi perfil</h3>
+            </div>
+            <div class="row mt-2">
+              <form action="#" method="get" class="row mt-4 needs-validation" id="form" novalidate>
+                <div class="col-md-12 mb-3"><label class="labels">Nombre*</label><input type="text"  id="nombreInput"class="form-control"
+                    required>
+                  <div class="invalid-feedback">
+                    Debe ingresar un nombre.
+                  </div>
+                </div>
+                <div class="col-md-12 mb-3"><label class="labels">Segundo nombre</label><input type="text" id="segundoNombreInput"
+                    class="form-control"></div>
+                <div class="col-md-12 mb-3"><label class="labels">Apellido*</label><input type="text"
+                    class="form-control" required id="apellidoInput">
+                  <div class="invalid-feedback">
+                    Debe ingresar un apellido.
+                  </div>
+                </div>
+                <div class="col-md-12 mb-3"><label class="labels">Segundo Apellido</label><input type="text"
+                    class="form-control" id="segundoApellidoInput"></div>
+                <div class="col-md-12 mb-3"><label class="labels">E-Mail*</label><input type="email" class="form-control" readonly id="emailInput"required>
+                    <div class="invalid-feedback">
+                      Debe ingresar un email.
+                    </div>
+                  </div>     
+                <div class="col-md-12 mb-3"><label class="labels">Teléfono</label><input type="text"
+                    class="form-control" id="telInput"></div>
+            </div>
+            <div class="text-center"><button class="btn btn-primary" id="btnSubmit" type="submit">Guardar cambios</button></div>
+            </form>
+          </div>
+        </div>
       </div>
+    </div>
+    </div>
     </div>
   </main>
   <footer class="text-muted">

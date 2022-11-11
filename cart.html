@@ -39,7 +39,7 @@
     <form action = "#"class="needs-validation" novalidate>
       <div class="container">
         <div class="row">
-          <div class="col-6 cont envio">
+          <div class="col-md-8 col-sm-12 text-center cont envio py-4">
             <h4>Tipo de envío</h4>
             <div class="radiosEnvio">
               <label for="premium" class="enviolbl"><input name="radio" id="premium" type="radio" value="0.15"
@@ -76,23 +76,23 @@
             </div>
             
           </div>
-          <div class="col d-flex flex-column align-items-center" id="costos">
-            <div class="cont envio">
+          <div class="col d-flex flex-column align-items-center mw-100" id="costos">
+            <div class="cont costos">
               <h3>Costos</h3>
-              <div class="card card-white post px-2 pt-2 mb-2 " style="color:rgb(47, 47, 49); width: 500px">
+              <div class="card card-white post px-2 pt-2 mb-1 w-100" style="color:rgb(47, 47, 49);">
                 <h4 class="card-title">Subtotal</h4>
                 <p class="card-text">USD <span id="subtotalCosto">15200</span></p>
               </div>
-              <div class="card card-white post ps-2 pt-2  mb-2" style="color:rgb(47, 47, 49); width: 500px">
+              <div class="card card-white post ps-2 pt-2  mb-2 w-100" style="color:rgb(47, 47, 49);">
                 <h4 class="card-title">Costo del envío</h4>
                 <p class="card-text">USD <span id="costoEnvio">-</span></p>
               </div>
-              <div class="card card-white post ps-2 pt-2  mb-5" style="color:rgb(47, 47, 49); width: 500px">
+              <div class="card card-white post ps-2 pt-2  mb-3 w-100" style="color:rgb(47, 47, 49)">
                 <h4 class="card-title">Total</h4>
                 <p class="card-text">USD <span id="total">15200</span></p>
               </div>
               <!-- Button trigger modal -->
-              <button type="button" class="btn btn-primary" style="width: 500px; height: 50px" data-bs-toggle="modal"
+              <button type="button" class="btn btn-primary w-100 mb-2" style="max-height: 50px" data-bs-toggle="modal"
                 data-bs-target="#exampleModal">
                 Seleccionar forma de pago
               </button>
@@ -154,10 +154,10 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <button type="submit" class="btn btn-primary mt-4">
-              Finalizar compra
-            </button>
+              <button type="submit" class="btn btn-primary mt-4">
+                Finalizar compra
+              </button>
+            </div>     
           </div>
     </form>
   </main>
