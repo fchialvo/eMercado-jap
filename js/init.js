@@ -61,6 +61,7 @@ display.innerHTML = `
 
 function borrarUsuario(){
   localStorage.removeItem("usuario");
+  localStorage.removeItem("profile-pic")
 }
 
 function setProductID(id) {

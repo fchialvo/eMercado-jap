@@ -19,12 +19,35 @@ if(localStorage.getItem("usuario") != null){
           event.stopPropagation()
         }
         else{
-          // guardar en localStorage los datos del usuario
-            localStorage.setItem("nombre", nombre.value);
-            localStorage.setItem("segundoNombre", segundoNombre.value);
-            localStorage.setItem("apellido", apellido.value);
-            localStorage.setItem("segundoApellido", segundoApellido.value);
-            localStorage.setItem("telefono", telefono.value);
+          //Evalúa si el usuario existe o no, si no existe crea el objeto con sus datos y lo guarda en localStorage
+          let usrData = JSON.parse(localStorage.getItem('usrData')) || [];
+          let existe = usrData.length && JSON.parse(localStorage.getItem('usrData')).some(data => data.email.toLowerCase() == localStorage.getItem("usuario"));
+          if(!existe){
+            usrData.push ({
+              email: localStorage.getItem("usuario"),
+              nombre: nombre.value,
+              segundoNombre: segundoNombre.value,
+              apellido: apellido.value,
+              segundoApellido: segundoApellido.value,
+              telefono: telefono.value,
+              fotoPerfil: localStorage.getItem("profile-pic") 
+            })
+            localStorage.setItem("usrData", JSON.stringify(usrData));
+          }
+          else{
+            // Si el usuario ya existía, modifica sus datos y actualiza el objeto en localStorage
+            usrData = usrData.filter(usr => !(usr.email == localStorage.getItem("usuario"))); // Elimina los usuarios con mismo email, para que no se repitan al ingresar los nuevos datos               
+            usrData.push ({
+              email: localStorage.getItem("usuario"),
+              nombre: nombre.value,
+              segundoNombre: segundoNombre.value,
+              apellido: apellido.value,
+              segundoApellido: segundoApellido.value,
+              telefono: telefono.value,
+              fotoPerfil: localStorage.getItem("profile-pic")
+            })
+            localStorage.setItem("usrData", JSON.stringify(usrData));       
+          }           
         }
         form.classList.add('was-validated')
       }, false)
@@ -40,16 +63,29 @@ if(localStorage.getItem("usuario") != null){
     emailInput.value = email;
 
     //guardar los datos ingresados al editar el perfil, para que queden en los campos
-    nombre.value = localStorage.getItem("nombre");
-    segundoNombre.value = localStorage.getItem("segundoNombre");
-    apellido.value = localStorage.getItem("apellido");
-    segundoApellido.value = localStorage.getItem("segundoApellido");
-    telefono.value = localStorage.getItem("telefono");
-    if(localStorage.getItem('profile-pic') !=null){
-      var dataImage = localStorage.getItem('profile-pic');
+    let usrData = JSON.parse(localStorage.getItem('usrData')) || [];
+    let currentUsr = usrData.find(usr=> usr.email.toLowerCase() == localStorage.getItem("usuario"))
+    let existe = usrData.length && JSON.parse(localStorage.getItem('usrData')).some(data => data.email.toLowerCase() == localStorage.getItem("usuario"));
+    // si el usuario ya existe, se cargan sus datos
+    if(existe){
+      nombre.value = currentUsr.nombre;
+      segundoNombre.value = currentUsr.segundoNombre;
+      apellido.value = currentUsr.apellido;
+      segundoApellido.value = currentUsr.segundoApellido;
+      telefono.value = currentUsr.telefono;
+      var dataImage = currentUsr.fotoPerfil;
+      fotoPerfil.src = dataImage || "img/avatar.svg";
+    }
+    // si el usuario no existe, se muestran los campos vacíos y la foto por defecto
+    else{
+      nombre.value = "";
+      segundoNombre.value = "";
+      apellido.value = "";
+      segundoApellido.value = "";
+      telefono.value = "";
+      var dataImage = "img/avatar.svg";
       fotoPerfil.src = dataImage;
     }
-    
   })
 }
 

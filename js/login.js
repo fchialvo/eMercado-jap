@@ -8,14 +8,16 @@
      if (form.checkValidity() === false) {
        form.classList.add('was-validated');
      } else {
+      const usuario = document.querySelector("#floatingInput");
+     localStorage.setItem("usuario", usuario.value);
        location.href = ("home.html");
      }
-     const usuario = document.querySelector("#floatingInput");
-     localStorage.setItem("usuario", usuario.value);
+     
     }, false);
     })()
     
 
+  
 
 
 
