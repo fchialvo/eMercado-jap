@@ -235,16 +235,19 @@ input[type = "text"], [type = "email"]{
 .cont{
   background-color: #9ed0d6;
   border-radius: 10px;
-  max-width: 100%;
   color:rgb(41, 41, 41);
   margin-top: 14.5px;
-  min-height: 440px;
-  max-height: 440px;
   padding: 5px 5px 0 10px;
+  height: 440px;
+  max-height: 440px;
+  overflow: auto;
 }
 
-label{
-  font-size: 18px;
+.cartItem{
+  max-width: 700px;
+  margin-right: auto;
+  margin-left: auto;
+  overflow-y: scroll;
 }
 
 .labels{
@@ -252,9 +255,8 @@ label{
 }
 
 .envio{
-  min-height: 350px;
-  max-height: 100%;
-  min-width: 350px;
+  max-width: 95%;
+  min-width: 60%;
   margin: 10px auto;
   padding-left: 30px;
   padding-right: 30px;
@@ -298,6 +300,18 @@ input[type="file"] {
 
 textarea{
   max-width: 100%;
+}
+
+.borrarItem{
+  color: #dc3545;
+  cursor: pointer;
+  position:absolute;
+  top:0;
+  right:0;
+}
+
+#nombreProducto{
+  width: 90px;
 }
 
 @media only screen and (max-width: 768px) {

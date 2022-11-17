@@ -62,6 +62,7 @@ display.innerHTML = `
 function borrarUsuario(){
   localStorage.removeItem("usuario");
   localStorage.removeItem("profile-pic")
+  localStorage.removeItem("cart")
 }
 
 function setProductID(id) {

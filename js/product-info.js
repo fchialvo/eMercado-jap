@@ -43,6 +43,7 @@ function getHTML(product) {
       <b>Categoría</b>
       <p class = "fs-6">${product.category}</p>
       <p class = "fs-6"><b>${product.soldCount} </b>vendidos</p>
+      <button type="button" id="comprar" class="btn btn-success">Comprar</button>
       </div>     
   </div>
   `;
@@ -96,8 +97,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   const list = document.querySelector("#product-container");
   const producto = localStorage.getItem("productID");
   const URL = PRODUCT_INFO_URL + producto + EXT_TYPE;
-  console.log(producto);
   const productInfo = await getJSONData(URL);
+  productInfo.data["count"] = 1;
   list.innerHTML += getHTML(productInfo.data);
 
   //Sección de comentarios
@@ -113,7 +114,33 @@ document.addEventListener("DOMContentLoaded", async function () {
   for(let product of productInfo.data.relatedProducts){
     relacionados.innerHTML += getRelatedProductsHTML(product);
   }
-  
+  //Accion que se realiza al clickear el botón de comprar 
+  const btnComprar = document.getElementById("comprar");
+  btnComprar.addEventListener("click",()=>{
+    Swal.fire("Producto agregado al carrito!", "", "success");
+    //array de productos del carrito, que se guardan en localStorage
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    //modificar el objeto para que coincida con el formato de los objetos del carrito
+    const objetoComprado = {};
+    delete Object.assign(objetoComprado, productInfo.data, {["unitCost"]: productInfo.data["cost"] })["cost"];
+    delete Object.assign(objetoComprado, productInfo.data, {["image"]: productInfo.data["images"][0] })["images"];
+    delete objetoComprado["relatedProducts"]
+    delete objetoComprado["description"]
+    delete objetoComprado["category"]
+    delete objetoComprado["soldCount"]
+    delete objetoComprado["cost"]
+    productInfo.data.count++;
+
+
+    //Si el objeto ya se encuentra en el localStorage, lo borra e ingresa el nuevo para que no se repitan
+    cart.forEach(cartProduct => {
+        if(cartProduct.id == objetoComprado.id){
+          cart.splice(cart.indexOf(cartProduct), 1);
+        }
+    });
+    cart.push(objetoComprado)
+    localStorage.setItem("cart", JSON.stringify(cart))  //vuelve a guardar el array del carrito en localStorage
+  })
 });
 
 const btnEnviar = document.getElementById("enviar");
@@ -142,3 +169,5 @@ btnEnviar.addEventListener("click", () => {
   </div>
    `;
 });
+
+

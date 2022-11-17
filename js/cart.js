@@ -2,110 +2,109 @@ const URL = "https://japceibal.github.io/emercado-api/user_cart/";
 
 function getHTML(product) {
   return `
-    <div class="d-flex p-2 mb-2 bg-light">
+    <div class="d-flex p-2 mb-2 bg-light" id="${product.id}">
         <img src="${product.image}" width = "130px" height="90px" alt="${product.name}">
-        <div class="d-flex justify-content-between w-100" id="cartItem">
+        
+        <div class="d-flex justify-content-between w-100" id="cartItem" style="  position:relative;">
             <div class="d-flex flex-column gap-2 mx-2">
-                <h4 class = "m-0">${product.name}</h4>
+              <div class="d-flex">
+                  <h5 class = "m-0" id="nombreProducto">${product.name}</h5>
+                  <i class="fas fa-trash-alt fa-lg borrarItem" onclick="borrarItem(${product.id})"></i>
+              </div>
                 <p >Costo: ${product.currency} ${product.unitCost}</p>
             </div>
             <div class="d-flex flex-column gap-2 mx-2">
                 <label for="cantidad"><b>Cantidad</b></label>
-                <input type="number" id = "cantidad" value = "${product.count}" min="1" style = "width :50px; height: 30px;">
+                <input type="number" class = "cantidad" value = "${product.count}" min="1" style = "width :50px; height: 30px;">
             </div>
             <div class="d-flex flex-column gap-2 mx-2">
                 <b>Subtotal </b>
-                <p>USD <span id = "subtotalInput">${product.unitCost}</span></p>
+                <p>USD <span class = "subtotalInput">${product.unitCost}</span></p>
+            </div>
+             <div class="d-flex flex-column justify-content-center gap-2 mx-2">
             </div>
         </div>
     </div> 
     `;
 }
 
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener("DOMContentLoaded", async function() {
   const cart = document.querySelector("#carrito");
   //obtiene los datos del carrito
   const cartList = await getJSONData(URL + 25801 + EXT_TYPE);
+  const cartProducts = JSON.parse(localStorage.getItem("cart")) || [];
 
-  for (let cartItem of cartList.data.articles) {
+  cartProducts.push(cartList.data.articles[0]);
+
+  for (let cartItem of cartProducts) {
     //Si el valor está en pesos, lo convierte a dólares
     if (cartItem.currency != "USD") {
-      cartItem.unitCost *= 41;
+      cartItem.unitCost = parseInt(cartItem.unitCost * 0.03);
       cartItem.currency = "USD";
     }
-    //genera HTML del carrito, teniendo como argumento el item que nos da el URL.
     cart.innerHTML += getHTML(cartItem);
+  }
 
-    const cantidadInput = document.getElementById("cantidad");
-    const subtotalInput = document.getElementById("subtotalInput");
-    const subtotalCosto = document.getElementById("subtotalCosto");
-    const costoEnvio = document.getElementById("costoEnvio");
-    const total = document.getElementById("total");
-    let radios = document.getElementsByName("radio");
+  //escucha cuando cambia la cantidad del articulo
+  const cantidadInputs = document.getElementsByClassName("cantidad");
+  const subtotalInputs = document.getElementsByClassName("subtotalInput");
+  const subtotalCosto = document.getElementById("subtotalCosto");
+  const costoEnvio = document.getElementById("costoEnvio");
+  const total = document.getElementById("total");
+  let radios = document.getElementsByName("radio");
 
-    //escucha cuando cambia la cantidad del articulo
-    cantidadInput.addEventListener("change", (e) => {
+  for (let i = 0; i < cantidadInputs.length; i++) {
+    cantidadInputs[i].addEventListener("change", (e) => {
       cantidad = e.target.value;
-      let subtotal = cantidad * cartItem.unitCost;
+      let subtotal = cantidad * cartProducts[i].unitCost;
+
+      subtotalInputs[i].innerHTML = subtotal;
+
+      calcularSubtotal();
+      for(let radio of radios){
+        calcularEnvio(radio)
+      }
+    });
+
+    
+    function calcularSubtotal(){
+      let subtotalFinal = 0;
+      for (let i = 0; i < subtotalInputs.length; i++) {
+        subtotalFinal += parseInt(subtotalInputs[i].innerHTML);
+        subtotalCosto.innerHTML = subtotalFinal.toLocaleString();
+        total.innerHTML = subtotalFinal.toLocaleString();
+      }
+      return subtotalFinal;
+    }
+    calcularSubtotal();
+
+    function calcularEnvio(radio){
+      let subtotal = calcularSubtotal();
       let envioPremium = parseInt(subtotal * 0.15);
       let envioExpress = parseInt(subtotal * 0.07);
       let envioStandard = parseInt(subtotal * 0.05);
 
-      //calcula el costo de envio y el total al cambiar la cantidad
+      if (radio.checked && radio.value == 0.15) {
+        costoEnvio.innerHTML = envioPremium.toLocaleString();
+        total.innerHTML = (envioPremium + subtotal).toLocaleString();
+      } else if (radio.checked && radio.value == 0.07) {
+        costoEnvio.innerHTML = envioExpress.toLocaleString();
+        total.innerHTML = (envioExpress + subtotal).toLocaleString();
+      } else if(radio.checked && radio.value == 0.05){
+        costoEnvio.innerHTML = envioStandard.toLocaleString();
+        total.innerHTML = (envioStandard + subtotal).toLocaleString();
+      }
+    }
+    
       for (let radio of radios) {
-        if (radio.checked && radio.value == 0.15) {
-          costoEnvio.innerHTML = envioPremium;
-          total.innerHTML = envioPremium + subtotal;
-        } else if (radio.checked && radio.value == 0.07) {
-          costoEnvio.innerHTML = envioExpress;
-          total.innerHTML = envioExpress + subtotal
-        } else if(radio.checked && radio.value == 0.05){
-          costoEnvio.innerHTML = envioStandard;
-          total.innerHTML = envioStandard + subtotal
-        }
-        else{
-          total.innerHTML = subtotal;
-        }
+        calcularEnvio(radio);
 
         //calcula costo de envio y total al cambiar el radio seleccionado
         radio.addEventListener("input", () => {
-          if (radio.checked && radio.value == 0.15) {
-            costoEnvio.innerHTML = envioPremium;
-            total.innerHTML = envioPremium + subtotal
-          } else if (radio.checked && radio.value == 0.07) {
-            costoEnvio.innerHTML = envioExpress;
-            total.innerHTML = envioExpress+ subtotal
-          } else if(radio.checked && radio.value == 0.05) {
-            costoEnvio.innerHTML = envioStandard;
-            total.innerHTML = envioStandard + subtotal
-          }
-          else{
-            total.innerHTML = subtotal;
-          }
-        });
+          calcularEnvio(radio);
+        })
       }
-
-      //valor de subtotal, en el articulo del carrito y en la parte de costos.
-      subtotalInput.innerHTML = subtotal;
-      subtotalCosto.innerHTML = subtotal;
-    });
-  }
-
-  const radios = document.getElementsByName("radio");
-  //valores por defecto de los costos, con los distintos radios seleccionados
-  for (let radio of radios) {
-    radio.addEventListener("input", () => {
-      if (radio.checked && radio.value == 0.15) {
-        costoEnvio.innerHTML = 2280;
-        total.innerHTML = 2280 + 15200 
-      } else if (radio.checked && radio.value == 0.07) {
-        costoEnvio.innerHTML = 1064;
-        total.innerHTML = 1064 + 15200 
-      } else {
-        costoEnvio.innerHTML = 760;
-        total.innerHTML = 760 + 15200 
-      }
-    });
+        
   }
 });
 
@@ -115,7 +114,6 @@ const vencimiento = document.getElementById("vencimiento");
 const nCuenta = document.getElementById("nCuenta");
 const tCredito = document.getElementById("tCredito");
 const tBancaria = document.getElementById("tBancaria");
-
 
 // validación del form, código de Bootstrap
 (() => {
@@ -127,53 +125,65 @@ const tBancaria = document.getElementById("tBancaria");
   // Recorrerlos y evitar que se envíen
   Array.from(forms).forEach((form) => {
     form.addEventListener(
-      "submit",(event) => {
+      "submit",
+      (event) => {
         event.preventDefault();
         //si no están checkeados los campos de forma de pago, mostrar error
-        if((!tCredito.checked && !tBancaria.checked)){
-            errorFormaPago()
-        }
-        else{
+        if (!tCredito.checked && !tBancaria.checked) {
+          errorFormaPago();
+        } else {
           mensajeErrorPago.innerHTML = "";
         }
-        
+
         if (form.checkValidity() == false) {
-            event.preventDefault();
-            event.stopPropagation();
-            form.classList.add('was-validated');
-          } else {
-            Swal.fire(
-                'Compra realizada!',
-                '',
-                'success'
-              )
-          }
+          event.preventDefault();
+          event.stopPropagation();
+          form.classList.add("was-validated");
+        } else {
+          Swal.fire("Compra realizada!", "", "success");
         }
-      ,false
+      },
+      false
     );
   });
 })();
 
 //error que se muestra al no seleccionar forma de pago
-let mensajeErrorPago = document.getElementById("mensajeError")
-function errorFormaPago(){
-    mensajeErrorPago.innerHTML = `
+let mensajeErrorPago = document.getElementById("mensajeError");
+function errorFormaPago() {
+  mensajeErrorPago.innerHTML = `
         <p class="text-danger">Debe seleccionar una forma de pago.</p>
-  `
+  `;
 }
+
+function borrarItem(id){
+    let cart = JSON.parse(localStorage.getItem("cart"));
+    cart = cart.filter(cartItem => cartItem.id != id);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    
+    location.reload();
+}
+
 
 
 //desactiva los campos de la opción no seleccionada
-function disableTarjeta(){
-    nTarjeta.disabled = true;
-    cSeguridad.disabled = true;
-    vencimiento.disabled = true;
-    nCuenta.disabled = false;
+function disableTarjeta() {
+  nTarjeta.disabled = true;
+  cSeguridad.disabled = true;
+  vencimiento.disabled = true;
+  nCuenta.disabled = false;
 }
 
-function disableTBancaria(){
-    nCuenta.disabled = true
-    nTarjeta.disabled = false;
-    cSeguridad.disabled = false;
-    vencimiento.disabled = false;
+function disableTBancaria() {
+  nCuenta.disabled = true;
+  nTarjeta.disabled = false;
+  cSeguridad.disabled = false;
+  vencimiento.disabled = false;
 }
+
+document.getElementById("form").addEventListener("keypress", (e) => {
+  var key = e.key || e.code || 0;
+  if (key == "Enter") {
+    e.preventDefault();
+  }
+});

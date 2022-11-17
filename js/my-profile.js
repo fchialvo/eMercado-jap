@@ -30,7 +30,7 @@ if(localStorage.getItem("usuario") != null){
               apellido: apellido.value,
               segundoApellido: segundoApellido.value,
               telefono: telefono.value,
-              fotoPerfil: localStorage.getItem("profile-pic") 
+              fotoPerfil: localStorage.getItem("profile-pic")
             })
             localStorage.setItem("usrData", JSON.stringify(usrData));
           }
