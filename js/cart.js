@@ -32,9 +32,9 @@ document.addEventListener("DOMContentLoaded", async function() {
   const cart = document.querySelector("#carrito");
   //obtiene los datos del carrito
   const cartList = await getJSONData(URL + 25801 + EXT_TYPE);
-  const cartProducts = JSON.parse(localStorage.getItem("cart")) || [];
+  const cartProducts = JSON.parse(localStorage.getItem("cart")) || []; //obtiene carrito guardado en localStorage, si no existe lo crea
 
-  cartProducts.push(cartList.data.articles[0]);
+  cartProducts.push(cartList.data.articles[0]); //suma el producto que viene por defecto al carrito
 
   for (let cartItem of cartProducts) {
     //Si el valor está en pesos, lo convierte a dólares
@@ -45,7 +45,6 @@ document.addEventListener("DOMContentLoaded", async function() {
     cart.innerHTML += getHTML(cartItem);
   }
 
-  //escucha cuando cambia la cantidad del articulo
   const cantidadInputs = document.getElementsByClassName("cantidad");
   const subtotalInputs = document.getElementsByClassName("subtotalInput");
   const subtotalCosto = document.getElementById("subtotalCosto");
@@ -54,15 +53,16 @@ document.addEventListener("DOMContentLoaded", async function() {
   let radios = document.getElementsByName("radio");
 
   for (let i = 0; i < cantidadInputs.length; i++) {
+    //escucha cuando cambia la cantidad del articulo
     cantidadInputs[i].addEventListener("change", (e) => {
       cantidad = e.target.value;
-      let subtotal = cantidad * cartProducts[i].unitCost;
+      let subtotal = cantidad * cartProducts[i].unitCost; //calcula el subtotal individual de ese articulo
 
       subtotalInputs[i].innerHTML = subtotal;
 
-      calcularSubtotal();
+      calcularSubtotal(); // calcula el subtotal final, la suma de todos los subtotales
       for(let radio of radios){
-        calcularEnvio(radio)
+        calcularEnvio(radio)//calcula el precio del envio dependiendo del radio seleccionado
       }
     });
 
@@ -76,6 +76,7 @@ document.addEventListener("DOMContentLoaded", async function() {
       }
       return subtotalFinal;
     }
+
     calcularSubtotal();
 
     function calcularEnvio(radio){
@@ -99,7 +100,7 @@ document.addEventListener("DOMContentLoaded", async function() {
       for (let radio of radios) {
         calcularEnvio(radio);
 
-        //calcula costo de envio y total al cambiar el radio seleccionado
+        //calcula costo de envio al cambiar el radio seleccionado
         radio.addEventListener("input", () => {
           calcularEnvio(radio);
         })
@@ -114,6 +115,7 @@ const vencimiento = document.getElementById("vencimiento");
 const nCuenta = document.getElementById("nCuenta");
 const tCredito = document.getElementById("tCredito");
 const tBancaria = document.getElementById("tBancaria");
+
 
 // validación del form, código de Bootstrap
 (() => {
@@ -156,6 +158,7 @@ function errorFormaPago() {
   `;
 }
 
+//funcion que elimina un item seleccionado del carrito
 function borrarItem(id){
     let cart = JSON.parse(localStorage.getItem("cart"));
     cart = cart.filter(cartItem => cartItem.id != id);
@@ -181,6 +184,7 @@ function disableTBancaria() {
   vencimiento.disabled = false;
 }
 
+//previene que se envie el formulario al presionar Enter.
 document.getElementById("form").addEventListener("keypress", (e) => {
   var key = e.key || e.code || 0;
   if (key == "Enter") {
